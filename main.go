@@ -23,12 +23,12 @@ func main() {
 	}
 
 	rootCmd.AddCommand(&cobra.Command{
-		Use:   "topetfs",
+		Use:   "top5",
 		Short: "List the top five performing ETFs",
 	})
 
 	rootCmd.AddCommand(&cobra.Command{
-		Use:   "bottometfs",
+		Use:   "bottom5",
 		Short: "List the bottom five performing ETFs",
 	})
 
