@@ -7,6 +7,7 @@ import (
 	"fmt"
 
 	"github.com/spf13/cobra"
+	"github.com/therealagt/etfcli/internal"
 )
 
 // infoCmd represents the info command
@@ -15,7 +16,19 @@ var infoCmd = &cobra.Command{
 	Short: "Analyze a specific ETF",
 	Long:  `Analyze and provide detailed information about a specific ETF identified by its symbol.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("info called")
+		if len(args) == 0 {
+			fmt.Println("Please provide at least one ETF symbol.")
+			return
+		}
+
+		data, err := internal.FetchETFData(args[0])
+		if err != nil {
+			fmt.Printf("Error fetching data for %s: %v\n", args[0], err)
+			return
+		}
+
+		fmt.Printf("ETF Symbol: %s\n", data.MetaData.Symbol)
+		fmt.Printf("Last Refreshed: %s\n", data.MetaData.LastRefreshed)
 	},
 }
 

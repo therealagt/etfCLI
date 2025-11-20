@@ -32,7 +32,8 @@ var rootCmd = &cobra.Command{
 	Use:   "etfcli",
 	Short: "ETF CLI is a command-line tool for analyzing ETFs",
 	Long: `ETF CLI is a command-line tool designed to help users analyze Exchange-Traded Funds (ETFs).
-	It provides functionalities to list top and bottom performing ETFs as well as detailed analysis of specific ETFs based on their symbols.`,
+	It provides functionalities to list top and bottom performing ETFs as well as detailed 
+	analysis of specific ETFs based on their symbols.`,
 	// Uncomment the following line if your bare application
 	// has an action associated with it:
 	// Run: func(cmd *cobra.Command, args []string) { },
