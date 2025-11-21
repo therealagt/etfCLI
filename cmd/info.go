@@ -1,6 +1,3 @@
-/*
-Copyright © 2025 NAME HERE <EMAIL ADDRESS>
-*/
 package cmd
 
 import (
@@ -10,38 +7,33 @@ import (
 	"github.com/therealagt/etfcli/internal"
 )
 
-// infoCmd represents the info command
 var infoCmd = &cobra.Command{
-	Use:   "info",
+	Use:   "info [ETF_SYMBOL]",
 	Short: "Analyze a specific ETF",
 	Long:  `Analyze and provide detailed information about a specific ETF identified by its symbol.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) == 0 {
-			fmt.Println("Please provide at least one ETF symbol.")
+			fmt.Println("Please provide one ETF symbol.")
 			return
 		}
 
-		data, err := internal.FetchETFData(args[0])
+		data, err := internal.FetchETFDataCached(args[0])
 		if err != nil {
 			fmt.Printf("Error fetching data for %s: %v\n", args[0], err)
 			return
 		}
 
-		fmt.Printf("ETF Symbol: %s\n", data.MetaData.Symbol)
-		fmt.Printf("Last Refreshed: %s\n", data.MetaData.LastRefreshed)
+		fmt.Printf("\nETF Information for %s\n", data.Symbol)
+		fmt.Println("==========================================")
+		fmt.Printf("Symbol: %s\n", data.Symbol)
+		fmt.Printf("Current Price: $%.2f\n", data.Price)
+		fmt.Printf("Previous Close: $%.2f\n", data.PreviousClose)
+		fmt.Printf("Change: $%.2f (%.2f%%)\n", data.Change, data.ChangePercent)
+		fmt.Printf("Volume: %d\n", data.Volume)
+		fmt.Printf("Last Updated: %s\n", data.LastUpdated.Format("2006-01-02 15:04:05"))
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(infoCmd)
-
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// infoCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// infoCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
